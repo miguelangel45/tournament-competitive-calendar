@@ -1,0 +1,55 @@
+.toolbar {
+    display: flex;
+    background-color: rgba(5, 0, 0, 0.71);
+}
+
+.menu{
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    justify-content: center;
+    flex-grow: 1;
+    & li {
+        color: azure;
+        padding: 0.785rem;
+    }
+
+    :hover {
+        color: rgba(5, 0, 0, 0.71);
+        background-color: orange;
+    }
+}
+.calendar {
+    & ul {
+        display: none;
+    }
+
+}
+.calendar:hover {
+    position: relative;
+    display: flex;
+    & ul {
+        display: flex;
+        position: absolute;
+        background-color: rgba(5, 0, 0, 0.71);
+        margin-top: 27px;
+        left: 0;
+    }
+}
+
+.submenu {
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+    & li {
+        flex-grow: 1;
+        margin-left: 0;
+        padding: 10px 30px;
+        min-width: 7em;
+    }
+}
+
+.is-active {
+    color: rgba(5, 0, 0, 0.71) !important;
+    background-color: orange;
+}
