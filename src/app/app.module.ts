@@ -9,6 +9,7 @@ import { ValorantGameComponent } from './valorant-game/valorant-game.component';
 import { HaloGameComponent } from './halo-game/halo-game.component';
 import { CodGameComponent } from './cod-game/cod-game.component';
 import { FifaGameComponent } from './fifa-game/fifa-game.component';
+import { HttpClientModule } from "@angular/common/http";
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -33,7 +34,8 @@ const routes: Routes = [
         BrowserModule,
         RouterLink,
         RouterOutlet,
-        RouterLinkActive
+        RouterLinkActive,
+        HttpClientModule
     ],
     exports: [
         RouterModule

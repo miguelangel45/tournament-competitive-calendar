@@ -1,1 +1,7 @@
-<p>home works!</p>
+<div class="main-carousel" data-flickity='{ "cellAlign": "left", "contain": true }'>
+    <div class="carousel-cell" *ngFor="let game of games; index as i">
+        Nombre: {{game.name}} <br>
+        <img src="{{game.background_image}}" alt="" width="200" height="200">
+    </div>
+</div>
+
