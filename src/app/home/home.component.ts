@@ -17,7 +17,7 @@ export class HomeComponent{
     }
 
     getGames() {
-        return this.rawGApi.getSelectedGame('valorant,call of duty Modern Warfare 2,halo infinite,fifa 23').subscribe(
+        return this.rawGApi.getSelectedGame('valorant,halo infinite,fifa 23&search_precise=true&parent_platforms=1').subscribe(
             (data:any) => this.games = data.results
         );
     }
