@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import {RawgApiService} from "./rawg-api.service";
+
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,8 @@ import {RawgApiService} from "./rawg-api.service";
 export class AppComponent {
   title = 'CompetitiveCalendar';
     private rawGApi: RawgApiService;
+
+
     constructor(rawGApi: RawgApiService) {
         this.rawGApi = rawGApi;
         this.rawGApi.getRawG();

@@ -35,7 +35,7 @@ const routes: Routes = [
         RouterLink,
         RouterOutlet,
         RouterLinkActive,
-        HttpClientModule
+        HttpClientModule,
     ],
     exports: [
         RouterModule

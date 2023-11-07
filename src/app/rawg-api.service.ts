@@ -24,6 +24,14 @@ export class RawgApiService {
     }
 
     getSelectedGame(game: string) {
-        return this.http.get(`${this.config?.rawgUrl}games?key=${this.config?.key}&search=${game}`)
+        let rawUrl = 'https://api.rawg.io/api/';
+        let key = '45576eee224740b88fa7a7f47f4bde0f';
+        if (this.config) {
+            rawUrl = this.config.rawgUrl;
+            key = this.config.key;
+        }
+
+
+        return this.http.get(`${rawUrl}games?key=${key}&search=${game}`)
     }
 }

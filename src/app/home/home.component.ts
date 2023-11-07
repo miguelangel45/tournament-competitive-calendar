@@ -1,19 +1,37 @@
-import {AfterViewChecked, AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, ElementRef, ViewChild} from '@angular/core';
 import {RawgApiService} from "../rawg-api.service";
-import {RawgConfig} from "../rawg-config.config";
+import KeenSlider, {KeenSliderInstance} from "keen-slider";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent{
+export class HomeComponent implements AfterViewInit, OnDestroy{
 
     private rawGApi: RawgApiService;
-    public games:any ;
+    public games:any;
+
     constructor(rawGApi: RawgApiService) {
         this.rawGApi = rawGApi;
+        this.rawGApi.getRawG();
         this.getGames()
+    }
+
+    // @ts-ignore
+    @ViewChild("sliderRef") sliderRef: ElementRef<HTMLElement>
+
+    // @ts-ignore
+    slider: KeenSliderInstance = null
+
+    ngAfterViewInit() {
+        this.slider = new KeenSlider(this.sliderRef.nativeElement, {
+            loop: true,
+        })
+    }
+
+    ngOnDestroy() {
+        if (this.slider) this.slider.destroy()
     }
 
     getGames() {

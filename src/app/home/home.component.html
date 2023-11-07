@@ -1,8 +1,10 @@
-<div class="main-carousel" data-flickity='{ "cellAlign": "left", "contain": true }'>
-    <div class="carousel-cell" *ngFor="let game of games; index as i">
-        Nombre: {{game.name}} <br>
-        Plataformas: <div *ngFor="let platform of game.platforms">{{platform.platform.name}}</div>
-        <img src="{{game.background_image}}" alt="" height="200">
+<div class="keen-slider" #sliderRef>
+    <div class="keen-slider__slide" [ngClass]="'number-slide'+i" *ngFor="let game of games; index as i">
+        <div class="game-container" [style]="'background-image: url('+game.background_image+')'">
+            <div class="text-image">Name: {{game.name}}</div>
+            <div class="text-image">Platforms: <div *ngFor="let platform of game.platforms">{{platform.platform.name}}</div></div>
+        </div>
+        <!--<img class="image" src="" alt="">-->
     </div>
 </div>
 
