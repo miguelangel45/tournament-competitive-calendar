@@ -1,4 +1,12 @@
-import {AfterViewInit, Component, OnDestroy, ElementRef, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    OnDestroy,
+    ElementRef,
+    ViewChild,
+    HostListener,
+    AfterContentInit
+} from '@angular/core';
 import {RawgApiService} from "../rawg-api.service";
 import KeenSlider, {KeenSliderInstance} from "keen-slider";
 
@@ -18,15 +26,23 @@ export class HomeComponent implements AfterViewInit, OnDestroy{
         this.getGames()
     }
 
+
     // @ts-ignore
-    @ViewChild("sliderRef") sliderRef: ElementRef<HTMLElement>
+    @ViewChild("sliderRef",{ static: false }) sliderRef: ElementRef<HTMLElement>
+
+
+
+    @HostListener('window:resize', ['$event'])
+    sizeChange(event:any) {
+        console.log('size changed.', event);
+    }
 
     // @ts-ignore
     slider: KeenSliderInstance = null
 
     ngAfterViewInit() {
         this.slider = new KeenSlider(this.sliderRef.nativeElement, {
-            loop: true,
+            loop: true
         })
     }
 
@@ -36,7 +52,26 @@ export class HomeComponent implements AfterViewInit, OnDestroy{
 
     getGames() {
         return this.rawGApi.getSelectedGame('valorant,halo infinite,fifa 23&search_precise=true&parent_platforms=1').subscribe(
-            (data:any) => this.games = data.results
+            (data:any) => {
+                this.games = data.results;
+                if (this.slider) {
+                    setTimeout(() => {
+                        this.slider?.update(undefined, 0)
+
+                        // Required when using indicator dots below the slides
+                        this.updateDotHelper()
+                    }, 1)
+                }
+            }
         );
+
     }
+
+    private updateDotHelper(): void {
+        if (this.slider) {
+            this.slider.update();
+        }
+    }
+
+
 }
