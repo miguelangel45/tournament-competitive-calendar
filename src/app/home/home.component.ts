@@ -51,7 +51,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy{
     }
 
     getGames() {
-        return this.rawGApi.getSelectedGame('valorant,halo-infinite,fifa-23,Call-of-duty:-Modern-warfare-2&parent_platforms=1&exclude_collection=true&dates=2018-01-01,2022-12-31&publishers=microsoft-studios,activision-blizzard,electronic-arts,riot-games').subscribe(
+        return this.rawGApi.getSelectedGames('valorant,halo-infinite,fifa-23,Call-of-duty:-Modern-warfare-2&parent_platforms=1&exclude_collection=true&dates=2018-01-01,2022-12-31&publishers=microsoft-studios,activision-blizzard,electronic-arts,riot-games').subscribe(
             (data:any) => {
                 this.games = data.results;
                 if (this.slider) {

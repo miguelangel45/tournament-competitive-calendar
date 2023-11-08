@@ -23,7 +23,7 @@ export class RawgApiService {
         return this.getRawG().subscribe((data: RawgConfig) => { this.config = {...data} });
     }
 
-    getSelectedGame(game: string) {
+    getSelectedGames(game: string) {
         let rawUrl = 'https://api.rawg.io/api/';
         let key = '45576eee224740b88fa7a7f47f4bde0f';
         if (this.config) {
@@ -33,5 +33,28 @@ export class RawgApiService {
 
 
         return this.http.get(`${rawUrl}games?key=${key}&search=${game}`)
+    }
+
+    getGameInfo(gameId: number) {
+        let rawUrl = 'https://api.rawg.io/api/';
+        let key = '45576eee224740b88fa7a7f47f4bde0f';
+        if (this.config) {
+            rawUrl = this.config.rawgUrl;
+            key = this.config.key;
+        }
+
+
+        return this.http.get(`${rawUrl}games/${gameId}?key=${key}`)
+    }
+    getGameImages(gameId: number) {
+        let rawUrl = 'https://api.rawg.io/api/';
+        let key = '45576eee224740b88fa7a7f47f4bde0f';
+        if (this.config) {
+            rawUrl = this.config.rawgUrl;
+            key = this.config.key;
+        }
+
+
+        return this.http.get(`${rawUrl}games/${gameId}/screenshots?key=${key}`)
     }
 }

@@ -12,11 +12,13 @@ export class ValorantGameComponent  implements AfterViewInit, OnDestroy{
 
     private rawGApi: RawgApiService;
     public games:any;
+    public gamesImages:any;
 
     constructor(rawGApi: RawgApiService) {
         this.rawGApi = rawGApi;
         this.rawGApi.getRawG();
-        this.getGames()
+        this.getGames();
+        this.getGameImages();
     }
 
     // @ts-ignore
@@ -37,9 +39,17 @@ export class ValorantGameComponent  implements AfterViewInit, OnDestroy{
     }
 
     getGames() {
-        return this.rawGApi.getSelectedGame('valorant&parent_platforms=1&exclude_collection=true&publishers=riot-games').subscribe(
+        return this.rawGApi.getGameInfo(415171).subscribe(
             (data:any) => {
-                this.games = data.results;
+                this.games = data;
+            }
+        );
+
+    }
+    getGameImages() {
+        return this.rawGApi.getGameImages(415171).subscribe(
+            (data:any) => {
+                this.gamesImages = data.results;
                 if (this.slider) {
                     setTimeout(() => {
                         this.slider?.update(undefined, 0)
