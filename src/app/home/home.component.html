@@ -1,10 +1,12 @@
 <div class="keen-slider" #sliderRef>
     <div class="keen-slider__slide" [ngClass]="'number-slide'+i" *ngFor="let game of games; index as i">
-        <div class="game-container" [style]="'background-image: url('+game.background_image+')'">
-            <div class="text-image">Name: {{game.name}}</div>
-            <div class="text-image">Platforms: <div *ngFor="let platform of game.platforms">{{platform.platform.name}}</div></div>
+        <div class="game-container" >
+            <img class="game-container-image" [src]="game.background_image" alt="">
+            <!--<div class="game-container-image" [style]="'background-image: url('+game.background_image+')'"></div>-->
+            <div class="text-image">
+                <div>Name: {{game.name}} <br> Platforms:</div>
+                <div *ngFor="let platform of game.platforms">{{platform.platform.name}}</div></div>
         </div>
-        <!--<img class="image" src="" alt="">-->
     </div>
 </div>
 
