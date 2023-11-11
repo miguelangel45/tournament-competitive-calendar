@@ -43,7 +43,10 @@ export class HomeComponent implements AfterViewInit, OnDestroy{
     ngAfterViewInit() {
         this.slider = new KeenSlider(this.sliderRef.nativeElement, {
             loop: true
-        })
+        });
+        setInterval(() => {
+            this.slider.next();
+        }, 3000);
     }
 
     ngOnDestroy() {

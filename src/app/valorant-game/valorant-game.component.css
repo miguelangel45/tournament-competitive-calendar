@@ -42,3 +42,50 @@
     object-fit: cover;
     opacity: 0.4;
 }
+.content{
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    padding: 1.5em;
+}
+.infoCaledar{
+    width: 100%;
+}
+
+.tournaments{
+    color: rgb(255, 125, 102);
+    background-color: #dbd8d2;
+    font-size: 14px;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+}
+.tournament-info{
+    display: flex;
+    flex-direction: row;
+    color: #0f1923;
+    & ul{
+        padding: 0;
+    }
+    & li {
+        margin: 2em;
+        list-style-type: none;
+        cursor: pointer;
+    }
+    & li:hover {
+        color: #f9f9f9;
+        background: linear-gradient(135deg, rgb(255, 51, 66) 0%, rgb(255, 48, 64) 0.01%, rgb(255, 125, 102) 100%);
+    }
+}
+.match{
+    padding: 2em;
+}
+.pagination{
+    display: flex;
+    flex-direction: row;
+}
+.prev & .next {
+    ::before{
+        content: '&#5171';
+    }
+}

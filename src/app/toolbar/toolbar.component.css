@@ -28,7 +28,7 @@
 .calendar:hover {
     position: relative;
     display: flex;
-    z-index: 1;
+    z-index: 2;
     & ul {
         display: flex;
         position: absolute;

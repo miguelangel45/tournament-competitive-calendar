@@ -1,6 +1,38 @@
 <div class="text-image">
-    <div>Name: {{games?.name}} <br> Platforms:</div>
-    <div *ngFor="let platform of games?.platforms">{{platform.platform.name}}</div></div>
+    <div class="content"><h2>Name: {{games?.name}}</h2></div>
+    <div class="content" [innerHtml]="games?.description"></div>
+    <div class="content">Platforms:</div>
+    <div class="content" *ngFor="let platform of games?.platforms">{{platform.platform.name}}</div>
+   <div class="tournaments">
+       <h2>Tournaments</h2>
+       <div class="tournament-info">
+           <div>
+               <ul class="pagination">
+                   <li class="prev">prev</li>
+                   <li class="next">next</li>
+               </ul>
+               <ul>
+                   <li *ngFor="let tournament of tournaments" (click)="changeInfo(tournament.matches)">
+                       <div>League: {{tournament.league.name}}</div>
+                       <div>Start Date: {{tournament.begin_at | date: 'medium'}}</div>
+                       <div>End Date: {{tournament.end_at  | date: 'medium'}}</div>
+                   </li>
+               </ul>
+               <ul class="pagination">
+                   <li class="prev">prev</li>
+                   <li class="next">next</li>
+               </ul>
+           </div>
+           <div *ngIf="infoCaledar">
+               <div *ngFor="let match of infoCaledar" class="match">
+                   <div>{{match.name}}</div>
+                   <div>Best of: {{match.number_of_games}}</div>
+                   <div>Scheduled at: {{match.scheduled_at}}</div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
 <div class="keen-slider" #sliderRef>
     <div class="keen-slider__slide" [ngClass]="'number-slide'+i" *ngFor="let imageBg of gamesImages; index as i">
         <div class="game-container" >
