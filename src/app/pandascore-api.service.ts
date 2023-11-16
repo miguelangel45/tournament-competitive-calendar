@@ -33,8 +33,8 @@ export class PandascoreApiService {
         return this.getPandaScoreConf().subscribe((data: PandascoreConfig) => { this.pandascoreConfig = {...data} });
     }
 
-    getGameTournament(game:string){
-        return this.http.get<PandascoreConfig>(`${this.pandascoreConfig.pandascoreUrl}${game}/tournaments`, {
+    getGameTournament(game:string, pagination: number = 1){
+        return this.http.get<PandascoreConfig>(`${this.pandascoreConfig.pandascoreUrl}${game}/tournaments?page=${pagination}`, {
             headers:this.headers
         })
     }

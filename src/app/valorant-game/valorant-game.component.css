@@ -51,7 +51,9 @@
 .infoCaledar{
     width: 100%;
 }
-
+.infoCaledar-match{
+    flex-grow: 1;
+}
 .tournaments{
     color: rgb(255, 125, 102);
     background-color: #dbd8d2;
@@ -60,9 +62,13 @@
     display: flex;
     flex-direction: column;
 }
+.tournament-container{
+    display: flex;
+}
 .tournament-info{
     display: flex;
-    flex-direction: row;
+    flex-grow: 1;
+    flex-direction: column;
     color: #0f1923;
     & ul{
         padding: 0;
@@ -84,8 +90,116 @@
     display: flex;
     flex-direction: row;
 }
-.prev & .next {
-    ::before{
-        content: '&#5171';
-    }
+.prev:hover {
+    color: rgb(255, 125, 102) !important;
+    background: rgba(0,0,0,0) !important;
+}
+.next:hover {
+    color: rgb(255, 125, 102) !important;
+    background: rgba(0,0,0,0) !important;
+}
+
+.loader-container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    position: relative;
+    animation: rotate 1s linear infinite
+}
+.loader::before , .loader::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0px;
+    border-radius: 50%;
+    border: 5px solid #FFF;
+    animation: prixClipFix 2s linear infinite ;
+}
+.loader::after{
+    inset: 8px;
+    transform: rotate3d(90, 90, 0, 180deg );
+    border-color: #FF3D00;
+}
+
+@keyframes rotate {
+    0%   {transform: rotate(0deg)}
+    100%   {transform: rotate(360deg)}
+}
+
+@keyframes prixClipFix {
+    0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+    75%, 100%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+}
+
+.link {
+    color: rgb(255, 125, 102);
+    cursor: pointer;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.link--arrowed {
+    display: inline-block;
+    height: 2rem;
+    line-height: 2rem;
+}
+.link--arrowed .arrow-icon {
+    position: relative;
+    top: -1px;
+    transition: transform 0.3s ease;
+    vertical-align: middle;
+}
+.link--arrowed .arrow-icon--circle {
+    transition: stroke-dashoffset 0.3s ease;
+    stroke-dasharray: 95;
+    stroke-dashoffset: 95;
+}
+
+.link--arrowed:hover .arrow-icon {
+    color: rgb(255, 125, 102);
+    transform: translate3d(5px, 0, 0);
+}
+
+.link--arrowed:hover .arrow-icon--circle {
+    stroke-dashoffset: 0;
+}
+
+.link--arrowed-inverse {
+    display: inline-block;
+    height: 2rem;
+    line-height: 2rem;
+}
+.link--arrowed-inverse .arrow-icon {
+    position: relative;
+    top: -1px;
+    transition: transform 0.3s ease;
+    vertical-align: middle;
+}
+.link--arrowed-inverse .arrow-icon--circle {
+    transition: stroke-dashoffset 0.3s ease;
+    stroke-dasharray: 95;
+    stroke-dashoffset: 95;
+}
+
+
+.link--arrowed-inverse:hover .arrow-icon {
+    color: rgb(255, 125, 102);
+    transform: translate3d(-5px, 0, 0) rotate(180deg);
+}
+
+.link--arrowed-inverse:hover .arrow-icon--circle {
+    stroke-dashoffset: 0;
+}
+
+
+.arrow-rotate{
+    transform: rotate(180deg);
 }

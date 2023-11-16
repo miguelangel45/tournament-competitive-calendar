@@ -18,7 +18,9 @@ export class ValorantGameComponent implements AfterViewInit, OnDestroy {
     public gamesImages: any;
     public tournaments: any;
     public infoCaledar: any | undefined;
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer;
+    public page: number = 0;
+    public loading: boolean = false;
 
     constructor(rawGApi: RawgApiService, DomSanitizer: DomSanitizer, pandascoreApi: PandascoreApiService) {
         this.rawGApi = rawGApi;
@@ -83,9 +85,17 @@ export class ValorantGameComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    public getTeams() {
-        this.pandascoreApi.getGameTournament('valorant').subscribe(
+    public getTeams(pageUp: boolean = true) {
+        if(pageUp){
+            this.page +=1;
+        }else {
+            this.page = (this.page <= 1)?1:this.page -=1
+        }
+        this.loading = true;
+        this.infoCaledar = []
+        this.pandascoreApi.getGameTournament('valorant', this.page).subscribe(
             (data:any) => {
+                this.loading = false;
                 this.tournaments = data;
             }
         );
