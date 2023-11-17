@@ -1,15 +1,15 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {RawgApiService} from "../rawg-api.service";
 import {PandascoreApiService} from "../pandascore-api.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import KeenSlider, {KeenSliderInstance} from "keen-slider";
 
 @Component({
-  selector: 'app-fifa-game',
-  templateUrl: './fifa-game.component.html',
-  styleUrls: ['./fifa-game.component.css']
+  selector: 'app-lol-game',
+  templateUrl: './lol-game.component.html',
+  styleUrls: ['./lol-game.component.css']
 })
-export class FifaGameComponent implements AfterViewInit {
+export class LolGameComponent {
     private rawGApi: RawgApiService;
     private pandascoreApi: PandascoreApiService;
     public games: any;
@@ -52,7 +52,7 @@ export class FifaGameComponent implements AfterViewInit {
     }
 
     getGames() {
-        return this.rawGApi.getGameInfo(546464).subscribe(
+        return this.rawGApi.getGameInfo(23598).subscribe(
             (data: any) => {
                 this.games = data;
             }
@@ -61,7 +61,7 @@ export class FifaGameComponent implements AfterViewInit {
     }
 
     getGameImages() {
-        return this.rawGApi.getGameImages(546464).subscribe(
+        return this.rawGApi.getGameImages(23598).subscribe(
             (data: any) => {
                 this.gamesImages = data.results;
                 if (this.slider) {
@@ -91,7 +91,7 @@ export class FifaGameComponent implements AfterViewInit {
         }
         this.loading = true;
         this.infoCaledar = []
-        this.pandascoreApi.getGameTournament('fifa', this.page).subscribe(
+        this.pandascoreApi.getGameTournament('lol', this.page).subscribe(
             (data:any) => {
                 this.loading = false;
                 this.tournaments = data;

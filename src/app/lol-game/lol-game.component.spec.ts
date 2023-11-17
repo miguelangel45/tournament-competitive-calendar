@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HaloGameComponent } from './halo-game.component';
+import { LolGameComponent } from './lol-game.component';
 
-describe('HaloGameComponent', () => {
-  let component: HaloGameComponent;
-  let fixture: ComponentFixture<HaloGameComponent>;
+describe('LolGameComponent', () => {
+  let component: LolGameComponent;
+  let fixture: ComponentFixture<LolGameComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HaloGameComponent]
+      declarations: [LolGameComponent]
     });
-    fixture = TestBed.createComponent(HaloGameComponent);
+    fixture = TestBed.createComponent(LolGameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
