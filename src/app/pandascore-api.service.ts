@@ -9,20 +9,12 @@ export class PandascoreApiService {
 
     private pandascoreConfigFile: string = 'assets/pandascore.json'
     private pandascoreConfig: PandascoreConfig = {
-        "pandascoreUrl": "https://api.pandascore.co/",
-        "key": "-kq7BEgNGiPftYZDIdT7sTLR4SllA-_XdRV19CbG_x1o7AM8Hh0"
+        "pandascoreUrl": "https://resonant-kaycee-jarcidci.koyeb.app/public/api/game/",
     };
     private http: HttpClient;
-    private headers: HttpHeaders;
 
     constructor(http: HttpClient) {
         this.http = http;
-        this.headers = new HttpHeaders(
-            {
-                'accept': 'application/json',
-                'authorization': `Bearer ${this.pandascoreConfig.key}`
-            }
-        )
         this.showRawGConfig();
     }
 
@@ -34,8 +26,6 @@ export class PandascoreApiService {
     }
 
     getGameTournament(game:string, pagination: number = 1){
-        return this.http.get<PandascoreConfig>(`${this.pandascoreConfig.pandascoreUrl}${game}/tournaments?page=${pagination}`, {
-            headers:this.headers
-        })
+        return this.http.get<PandascoreConfig>(`${this.pandascoreConfig.pandascoreUrl}${game}/tournaments?page=${pagination}`, {})
     }
 }
