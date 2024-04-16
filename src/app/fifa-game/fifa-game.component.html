@@ -94,7 +94,7 @@
                     Live stream Not available
                 </div>
                 <div *ngIf="video_url">
-                    <iframe *ngIf="video == 'youtube'" width="560" height="315" [src]="sanitizeUrl(video_url)"
+                    <iframe *ngIf="video == 'youtube'" width="560" height="315" [cachedSrc]="video_url"
                             title="YouTube video player"
                             frameborder="0"
                             allow="accelerometer; autoplay;
@@ -103,7 +103,7 @@
                       web-share" referrerpolicy="strict-origin-when-cross-origin"
                             allowfullscreen></iframe>
                     <iframe *ngIf="video == 'twitch'"
-                            [src]="sanitizeUrl(video_url+'&parent='+getCurrentDomain())"
+                            [cachedSrc]="video_url+'&parent='+getCurrentDomain()"
                             width="560" height="315"
                             allowfullscreen>
                     </iframe>

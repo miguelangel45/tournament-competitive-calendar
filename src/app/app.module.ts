@@ -10,6 +10,7 @@ import {CodGameComponent} from './cod-game/cod-game.component';
 import {FifaGameComponent} from './fifa-game/fifa-game.component';
 import {HttpClientModule} from "@angular/common/http";
 import {LolGameComponent} from './lol-game/lol-game.component';
+import { CachedSrcDirective } from './cached-src.directive';
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -28,7 +29,8 @@ const routes: Routes = [
         LolGameComponent,
         CodGameComponent,
         FifaGameComponent,
-        LolGameComponent
+        LolGameComponent,
+        CachedSrcDirective
     ],
     imports: [
         RouterModule.forRoot(routes),

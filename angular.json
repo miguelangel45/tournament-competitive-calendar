@@ -6,7 +6,7 @@
     "CompetitiveCalendsar": {
       "projectType": "application",
       "schematics": {},
-      "root": "",
+      "root": "/",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
@@ -90,6 +90,13 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "https://miguelangel45.github.io/tournament-competitive-calendar/",
+            "name": "Miguel Angel Tovar"
           }
         }
       }

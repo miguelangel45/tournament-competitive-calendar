@@ -38,7 +38,7 @@ export class CodGameComponent {
     // @ts-ignore
     slider: KeenSliderInstance = null
     video: string | undefined;
-    video_url: SafeUrl | undefined;
+    video_url: string | undefined;
 
     ngAfterViewInit() {
         this.slider = new KeenSlider(this.sliderRef.nativeElement, {
