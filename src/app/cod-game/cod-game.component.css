@@ -203,3 +203,10 @@
 .arrow-rotate{
     transform: rotate(180deg);
 }
+
+.watchStream {
+    cursor: pointer;
+}
+.watchStream:hover{
+    text-underline: blue !important;
+}

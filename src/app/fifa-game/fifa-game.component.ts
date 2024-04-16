@@ -19,6 +19,8 @@ export class FifaGameComponent implements AfterViewInit {
     private sanitizer: DomSanitizer;
     public page: number = 0;
     public loading: boolean = false;
+    protected video: string | undefined;
+    protected video_url: string | undefined;
 
     constructor(rawGApi: RawgApiService, DomSanitizer: DomSanitizer, pandascoreApi: PandascoreApiService) {
         this.rawGApi = rawGApi;
@@ -101,7 +103,27 @@ export class FifaGameComponent implements AfterViewInit {
     public changeInfo(matches: any){
         this.infoCaledar = matches;
     }
-    public sanitizeUrl(url: string): SafeUrl{
+    public sanitizeUrl(url: SafeUrl | undefined): SafeUrl{
         return this.sanitizer.bypassSecurityTrustResourceUrl(<string>url);
+    }
+
+    public getCurrentDomain(){
+        return window.location.hostname
+    }
+
+    public showStream(url: string, embed_url: string){
+        this.video = this.checkSource(url);
+        this.video_url = embed_url;
+    }
+
+    public checkSource(url: string) : string | undefined {
+        let domain = (new URL(url));
+        if(domain.hostname == 'www.youtube.com'){
+            return 'youtube';
+        }
+        if (domain.hostname == 'www.twitch.tv'){
+            return 'twitch';
+        }
+        return undefined;
     }
 }

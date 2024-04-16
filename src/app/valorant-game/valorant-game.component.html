@@ -1,15 +1,15 @@
 <div class="text-image">
-    <div class="content"><h2>Name: {{games?.name}}</h2></div>
+    <div class="content"><h2>Name: {{ games?.name }}</h2></div>
     <div class="content" [innerHtml]="games?.description"></div>
     <div class="content">Platforms:</div>
-    <div class="content" *ngFor="let platform of games?.platforms">{{platform.platform.name}}</div>
+    <div class="content" *ngFor="let platform of games?.platforms">{{ platform.platform.name }}</div>
     <div class="tournaments">
         <h2>Tournaments</h2>
         <div *ngIf="loading" class="loader-container"><span class="loader"></span></div>
         <div class="tournament-container">
             <div class="tournament-info">
                 <ul class="pagination" *ngIf="tournaments">
-                    <li (click)="getTeams(false)" class="prev link link--arrowed-inverse" >
+                    <li (click)="getTeams(false)" class="prev link link--arrowed-inverse">
                         <svg class="arrow-icon arrow-rotate" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                              viewBox="0 0 32 32">
                             <g fill="none" stroke="#FF7D66FF" stroke-width="1.5" stroke-linejoin="round"
@@ -34,14 +34,15 @@
                     </li>
                 </ul>
                 <ul *ngIf="tournaments">
-                    <li [hidden]="loading" *ngFor="let tournament of tournaments" (click)="changeInfo(tournament.matches)">
-                        <div>League: {{tournament.league.name}}</div>
-                        <div>Start Date: {{tournament.begin_at | date: 'medium'}}</div>
-                        <div>End Date: {{tournament.end_at  | date: 'medium'}}</div>
+                    <li [hidden]="loading" *ngFor="let tournament of tournaments"
+                        (click)="changeInfo(tournament.matches)">
+                        <div>League: {{ tournament.league.name }}</div>
+                        <div>Start Date: {{ tournament.begin_at | date: 'medium' }}</div>
+                        <div>End Date: {{ tournament.end_at  | date: 'medium' }}</div>
                     </li>
                 </ul>
                 <ul class="pagination" *ngIf="tournaments">
-                    <li (click)="getTeams(false)" class="prev link link--arrowed-inverse" >
+                    <li (click)="getTeams(false)" class="prev link link--arrowed-inverse">
                         <svg class="arrow-icon arrow-rotate" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                              viewBox="0 0 32 32">
                             <g fill="none" stroke="#FF7D66FF" stroke-width="1.5" stroke-linejoin="round"
@@ -68,9 +69,44 @@
             </div>
             <div class="infoCaledar-match" *ngIf="infoCaledar">
                 <div *ngFor="let match of infoCaledar" class="match">
-                    <div>{{match.name}}</div>
-                    <div>Best of: {{match.number_of_games}}</div>
-                    <div>Scheduled at: {{match.scheduled_at}}</div>
+                    <div>{{ match.name }}</div>
+                    <div>Best of: {{ match.number_of_games }}</div>
+                    <div>Scheduled at: {{ match.scheduled_at }}</div>
+                    <div>Live <i *ngIf="match.live.url" class="fa-solid fa-circle"></i></div>
+                    <div>
+                        <span *ngFor="let stream of match.streams_list">
+                            <div *ngIf="stream.raw_url">
+                                <span class="watchStream"
+                                      (click)="showStream(stream.raw_url, stream.embed_url)"> Watch here <i
+                                    class="fa-solid fa-eye"></i></span>&nbsp;<i
+                                *ngIf="checkSource(stream.raw_url) == 'youtube'"
+                                class="fa-brands fa-youtube"></i>&nbsp;<i
+                                *ngIf="checkSource(stream.raw_url) == 'twitch'"
+                                class="fa-brands fa-twitch"></i>&nbsp;<span>Official: <i
+                                *ngIf="stream.official"
+                                class="fa-solid fa-circle-check"></i></span></div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="liveStream">
+                <div *ngIf="!video_url">
+                    Live stream Not available
+                </div>
+                <div *ngIf="video_url">
+                    <iframe *ngIf="video == 'youtube'" width="560" height="315" [src]="sanitizeUrl(video_url)"
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay;
+                     clipboard-write; encrypted-media;
+                     gyroscope; picture-in-picture;
+                      web-share" referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen></iframe>
+                    <iframe *ngIf="video == 'twitch'"
+                            [src]="sanitizeUrl(video_url+'&parent='+getCurrentDomain())"
+                            width="560" height="315"
+                            allowfullscreen>
+                    </iframe>
                 </div>
             </div>
         </div>
