@@ -1,121 +1,205 @@
-<div class="text-image">
-    <div class="content"><h2>Name: {{ games?.name }}</h2></div>
-    <div class="content" [innerHtml]="games?.description"></div>
-    <div class="content">Platforms:</div>
-    <div class="content" *ngFor="let platform of games?.platforms">{{ platform.platform.name }}</div>
-    <div class="tournaments">
-        <h2>Tournaments</h2>
-        <div *ngIf="loading" class="loader-container"><span class="loader"></span></div>
-        <div class="tournament-container">
-            <div class="tournament-info">
-                <ul class="pagination" *ngIf="tournaments">
-                    <li (click)="getTeams(false)" class="prev link link--arrowed-inverse">
-                        <svg class="arrow-icon arrow-rotate" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                             viewBox="0 0 32 32">
-                            <g fill="none" stroke="#FF7D66FF" stroke-width="1.5" stroke-linejoin="round"
-                               stroke-miterlimit="10">
-                                <circle class="arrow-icon--circle" cx="16" cy="16" r="15.12"></circle>
-                                <path class="arrow-icon--arrow"
-                                      d="M16.14 9.93L22.21 16l-6.07 6.07M8.23 16h13.98"></path>
-                            </g>
-                        </svg>
-                        prev
-                    </li>
-                    <li (click)="getTeams(true)" class="next link link--arrowed">next
-                        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                             viewBox="0 0 32 32">
-                            <g fill="none" stroke="#FF7D66FF" stroke-width="1.5" stroke-linejoin="round"
-                               stroke-miterlimit="10">
-                                <circle class="arrow-icon--circle" cx="16" cy="16" r="15.12"></circle>
-                                <path class="arrow-icon--arrow"
-                                      d="M16.14 9.93L22.21 16l-6.07 6.07M8.23 16h13.98"></path>
-                            </g>
-                        </svg>
-                    </li>
-                </ul>
-                <ul *ngIf="tournaments">
-                    <li [hidden]="loading" *ngFor="let tournament of tournaments"
-                        (click)="changeInfo(tournament.matches)">
-                        <div>League: {{ tournament.league.name }}</div>
-                        <div>Start Date: {{ tournament.begin_at | date: 'medium' }}</div>
-                        <div>End Date: {{ tournament.end_at  | date: 'medium' }}</div>
-                    </li>
-                </ul>
-                <ul class="pagination" *ngIf="tournaments">
-                    <li (click)="getTeams(false)" class="prev link link--arrowed-inverse">
-                        <svg class="arrow-icon arrow-rotate" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                             viewBox="0 0 32 32">
-                            <g fill="none" stroke="#FF7D66FF" stroke-width="1.5" stroke-linejoin="round"
-                               stroke-miterlimit="10">
-                                <circle class="arrow-icon--circle" cx="16" cy="16" r="15.12"></circle>
-                                <path class="arrow-icon--arrow"
-                                      d="M16.14 9.93L22.21 16l-6.07 6.07M8.23 16h13.98"></path>
-                            </g>
-                        </svg>
-                        prev
-                    </li>
-                    <li (click)="getTeams(true)" class="next link link--arrowed">next
-                        <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                             viewBox="0 0 32 32">
-                            <g fill="none" stroke="#FF7D66FF" stroke-width="1.5" stroke-linejoin="round"
-                               stroke-miterlimit="10">
-                                <circle class="arrow-icon--circle" cx="16" cy="16" r="15.12"></circle>
-                                <path class="arrow-icon--arrow"
-                                      d="M16.14 9.93L22.21 16l-6.07 6.07M8.23 16h13.98"></path>
-                            </g>
-                        </svg>
-                    </li>
-                </ul>
+<div class="timeline-container">
+    <!-- Header con información del juego -->
+    <div class="game-header">
+        <div class="header-content">
+            <h1 class="game-name">{{ games?.name }}</h1>
+            <div class="game-meta">
+        <span class="meta-item" *ngFor="let platform of games?.platforms?.slice(0, 3)">
+          {{ platform.platform.name }}
+        </span>
             </div>
-            <div class="infoCaledar-match" *ngIf="infoCaledar">
-                <div *ngFor="let match of infoCaledar" class="match">
-                    <div>{{ match.name }}</div>
-                    <div>Best of: {{ match.number_of_games }}</div>
-                    <div>Scheduled at: {{ match.scheduled_at }}</div>
-                    <div>Live <i *ngIf="match.live.url" class="fa-solid fa-circle"></i></div>
-                    <div>
-                        <span *ngFor="let stream of match.streams_list">
-                            <div *ngIf="stream.raw_url">
-                                <span class="watchStream"
-                                      (click)="showStream(stream.raw_url, stream.embed_url)"> Watch here <i
-                                    class="fa-solid fa-eye"></i></span>&nbsp;<i
-                                *ngIf="checkSource(stream.raw_url) == 'youtube'"
-                                class="fa-brands fa-youtube"></i>&nbsp;<i
-                                *ngIf="checkSource(stream.raw_url) == 'twitch'"
-                                class="fa-brands fa-twitch"></i>&nbsp;<span>Official: <i
-                                *ngIf="stream.official"
-                                class="fa-solid fa-circle-check"></i></span></div>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="liveStream">
-                <div *ngIf="!video_url">
-                    Live stream Not available
-                </div>
-                <div *ngIf="video_url">
-                    <iframe *ngIf="video == 'youtube'" width="560" height="315" [cachedSrc]="video_url"
-                            title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay;
-                     clipboard-write; encrypted-media;
-                     gyroscope; picture-in-picture;
-                      web-share" referrerpolicy="strict-origin-when-cross-origin"
-                            allowfullscreen></iframe>
-                    <iframe *ngIf="video == 'twitch'"
-                            [cachedSrc]="video_url+'&parent='+getCurrentDomain()"
-                            width="560" height="315"
-                            allowfullscreen>
-                    </iframe>
+        </div>
+    </div>
+
+    <!-- Galería de imágenes en carrusel -->
+    <div class="gallery-section">
+        <h2 class="section-title">Galería del Juego</h2>
+        <div class="keen-slider" #sliderRef>
+            <div class="keen-slider__slide" *ngFor="let imageBg of gamesImages; index as i">
+                <div class="slide-content">
+                    <img [src]="imageBg.image" [alt]="'Screenshot ' + (i + 1)" class="slide-image">
+                    <div class="slide-overlay"></div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="keen-slider" #sliderRef>
-    <div class="keen-slider__slide" [ngClass]="'number-slide'+i" *ngFor="let imageBg of gamesImages; index as i">
-        <div class="game-container">
-            <img class="game-container-image" [src]="imageBg.image" alt="">
+
+    <!-- Filtros de torneos -->
+    <div class="filters-section">
+        <h2 class="section-title">Torneos Competitivos</h2>
+        <div class="filter-buttons">
+            <button class="filter-btn" [class.active]="selectedFilter === 'all'" (click)="filterTournaments('all')">
+                Todos
+            </button>
+            <button class="filter-btn status-live" [class.active]="selectedFilter === 'live'" (click)="filterTournaments('live')">
+                🔴 En Vivo
+            </button>
+            <button class="filter-btn status-upcoming" [class.active]="selectedFilter === 'upcoming'" (click)="filterTournaments('upcoming')">
+                📅 Próximos
+            </button>
+            <button class="filter-btn status-completed" [class.active]="selectedFilter === 'completed'" (click)="filterTournaments('completed')">
+                ✓ Finalizados
+            </button>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination-controls" *ngIf="tournaments && tournaments.length > 0">
+            <button class="pagination-btn" (click)="getTeams(false)" [disabled]="page <= 1">
+                <svg class="arrow-icon arrow-rotate" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                    <g>
+                        <circle class="arrow-icon--circle" cx="16" cy="16" r="15.12"></circle>
+                        <path class="arrow-icon--arrow" d="M16.14 9.93L22.21 16l-6.07 6.07M8.23 16h13.98"></path>
+                    </g>
+                </svg>
+                Anterior
+            </button>
+            <span class="page-indicator">Página {{ page }}</span>
+            <button class="pagination-btn" (click)="getTeams(true)">
+                Siguiente
+                <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                    <g>
+                        <circle class="arrow-icon--circle" cx="16" cy="16" r="15.12"></circle>
+                        <path class="arrow-icon--arrow" d="M16.14 9.93L22.21 16l-6.07 6.07M8.23 16h13.98"></path>
+                    </g>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Loader -->
+    <div *ngIf="loading" class="loader-container">
+        <span class="loader"></span>
+        <p>Cargando torneos...</p>
+    </div>
+
+    <!-- Timeline de torneos -->
+    <div class="timeline" *ngIf="!loading && tournaments && tournaments.length > 0">
+        <div class="timeline-line"></div>
+
+        <div class="timeline-item"
+             *ngFor="let tournament of filteredTournaments; let i = index"
+             [class.left]="i % 2 === 0"
+             [class.right]="i % 2 !== 0">
+
+            <div class="timeline-content">
+                <div class="tournament-card" [ngClass]="getStatusClass(tournament)" (click)="changeInfo(tournament.matches)">
+                    <div class="card-header">
+                        <span class="status-badge">{{ getStatusLabel(tournament) }}</span>
+                        <h3 class="tournament-name">{{ tournament.league.name }}</h3>
+                        <p class="tournament-subtitle" *ngIf="tournament.serie?.full_name">{{ tournament.serie.full_name }}</p>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="info-row">
+                            <span class="info-icon">📅</span>
+                            <span class="info-text">Inicio: {{ tournament.begin_at | date: 'medium' }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-icon">🏁</span>
+                            <span class="info-text">Fin: {{ tournament.end_at | date: 'medium' }}</span>
+                        </div>
+                        <div class="info-row" *ngIf="tournament.matches && tournament.matches.length > 0">
+                            <span class="info-icon">🎮</span>
+                            <span class="info-text">{{ tournament.matches.length }} Partidas</span>
+                        </div>
+                        <div class="info-row" *ngIf="tournament.prizepool">
+                            <span class="info-icon">💰</span>
+                            <span class="info-text">{{ tournament.prizepool }}</span>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button class="action-btn" (click)="changeInfo(tournament.matches); $event.stopPropagation()">
+                            Ver Partidas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-marker">
+                <div class="marker-dot"></div>
+                <div class="marker-pulse" *ngIf="getTournamentStatus(tournament) === 'live'"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje si no hay torneos -->
+    <div class="no-tournaments" *ngIf="!loading && (!filteredTournaments || filteredTournaments.length === 0)">
+        <div class="empty-state">
+            <span class="empty-icon">🏆</span>
+            <h3>No hay torneos {{ selectedFilter === 'all' ? '' : getStatusLabel({begin_at: '', end_at: ''}).toLowerCase() }}</h3>
+            <p>Revisa más tarde o cambia de página para ver más torneos</p>
+        </div>
+    </div>
+
+    <!-- Panel de información de partidas -->
+    <div class="matches-panel" *ngIf="infoCaledar && infoCaledar.length > 0">
+        <h2 class="section-title">Partidas del Torneo</h2>
+        <div class="matches-grid">
+            <div class="match-card" *ngFor="let match of infoCaledar">
+                <div class="match-header">
+                    <h4 class="match-name">{{ match.name }}</h4>
+                    <span class="match-live" *ngIf="match.live?.url">
+            <i class="live-dot"></i> EN VIVO
+          </span>
+                </div>
+
+                <div class="match-details">
+                    <div class="match-info">
+                        <span class="info-label">Formato:</span>
+                        <span class="info-value">Best of {{ match.number_of_games }}</span>
+                    </div>
+                    <div class="match-info">
+                        <span class="info-label">Fecha:</span>
+                        <span class="info-value">{{ match.scheduled_at | date: 'short' }}</span>
+                    </div>
+                </div>
+
+                <!-- Streams disponibles -->
+                <div class="streams-section" *ngIf="match.streams_list && match.streams_list.length > 0">
+                    <h5>Streams disponibles:</h5>
+                    <div class="streams-list">
+                        <button
+                            *ngFor="let stream of match.streams_list"
+                            class="stream-btn"
+                            (click)="showStream(stream.raw_url, stream.embed_url)"
+                            [disabled]="!stream.raw_url">
+                            <i class="fa-brands"
+                               [ngClass]="{
+                   'fa-youtube': checkSource(stream.raw_url) === 'youtube',
+                   'fa-twitch': checkSource(stream.raw_url) === 'twitch'
+                 }"></i>
+                            <span>{{ checkSource(stream.raw_url) || 'Stream' }}</span>
+                            <i *ngIf="stream.official" class="fa-solid fa-circle-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Stream Player -->
+    <div class="live-stream-section" *ngIf="video_url">
+        <h2 class="section-title">Transmisión en Vivo</h2>
+        <div class="stream-player">
+            <button class="close-stream" (click)="video_url = undefined; video = undefined">✕ Cerrar</button>
+            <iframe
+                *ngIf="video === 'youtube'"
+                [src]="sanitizeUrl(video_url)"
+                width="100%"
+                height="500"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
+            <iframe
+                *ngIf="video === 'twitch'"
+                [src]="sanitizeUrl(video_url + '&parent=' + getCurrentDomain())"
+                width="100%"
+                height="500"
+                allowfullscreen>
+            </iframe>
         </div>
     </div>
 </div>

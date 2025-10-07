@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ElementRef} from '@angular/core';
 import {RawgApiService} from "../rawg-api.service";
 import {PandascoreApiService} from "../pandascore-api.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
@@ -21,6 +21,7 @@ export class FifaGameComponent implements AfterViewInit {
     public loading: boolean = false;
     protected video: string | undefined;
     protected video_url: string | undefined;
+    public selectedFilter: string = 'all';
 
     constructor(rawGApi: RawgApiService, DomSanitizer: DomSanitizer, pandascoreApi: PandascoreApiService) {
         this.rawGApi = rawGApi;
@@ -97,6 +98,7 @@ export class FifaGameComponent implements AfterViewInit {
             (data:any) => {
                 this.loading = false;
                 this.tournaments = data;
+                this.filterTournaments(this.selectedFilter);
             }
         );
     }
@@ -126,4 +128,72 @@ export class FifaGameComponent implements AfterViewInit {
         }
         return undefined;
     }
+    filterTournaments(status: string) {
+        this.selectedFilter = status;
+    }
+
+    get filteredTournaments() {
+        if (!this.tournaments) return [];
+        if (this.selectedFilter === 'all') {
+            return this.tournaments;
+        }
+
+        const now = new Date();
+        return this.tournaments.filter((t: any) => {
+            const beginDate = new Date(t.begin_at);
+            const endDate = new Date(t.end_at);
+
+            if (this.selectedFilter === 'live') {
+                return now >= beginDate && now <= endDate;
+            } else if (this.selectedFilter === 'upcoming') {
+                return now < beginDate;
+            } else if (this.selectedFilter === 'completed') {
+                return now > endDate;
+            }
+            return true;
+        });
+    }
+
+    getStatusClass(tournament: any): string {
+        const now = new Date();
+        const beginDate = new Date(tournament.begin_at);
+        const endDate = new Date(tournament.end_at);
+
+        if (now >= beginDate && now <= endDate) {
+            return 'status-live';
+        } else if (now < beginDate) {
+            return 'status-upcoming';
+        } else {
+            return 'status-completed';
+        }
+    }
+
+    getStatusLabel(tournament: any): string {
+        const now = new Date();
+        const beginDate = new Date(tournament.begin_at);
+        const endDate = new Date(tournament.end_at);
+
+        if (now >= beginDate && now <= endDate) {
+            return 'En Vivo';
+        } else if (now < beginDate) {
+            return 'Próximamente';
+        } else {
+            return 'Finalizado';
+        }
+    }
+
+    getTournamentStatus(tournament: any): 'live' | 'upcoming' | 'completed' {
+        const now = new Date();
+        const beginDate = new Date(tournament.begin_at);
+        const endDate = new Date(tournament.end_at);
+
+        if (now >= beginDate && now <= endDate) {
+            return 'live';
+        } else if (now < beginDate) {
+            return 'upcoming';
+        } else {
+            return 'completed';
+        }
+    }
 }
+
