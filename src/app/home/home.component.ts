@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import {RawgApiService} from "../rawg-api.service";
 import KeenSlider, {KeenSliderInstance} from "keen-slider";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy{
     private rawGApi: RawgApiService;
     public games:any;
 
-    constructor(rawGApi: RawgApiService) {
+    constructor(rawGApi: RawgApiService, private router: Router) {
         this.rawGApi = rawGApi;
         this.rawGApi.getRawG();
         this.getGames()
@@ -49,12 +50,16 @@ export class HomeComponent implements AfterViewInit, OnDestroy{
         }, 3000);
     }
 
+    openCalendar(game: any) {
+        this.router.navigate([`/calendar/${game.slug}`])
+    }
+
     ngOnDestroy() {
         if (this.slider) this.slider.destroy()
     }
 
     getGames() {
-        return this.rawGApi.getSelectedGames('valorant,halo-infinite,fifa-23,Call-of-duty:-Modern-warfare-2&parent_platforms=1&exclude_collection=true&dates=2018-01-01,2022-12-31&publishers=microsoft-studios,activision-blizzard,electronic-arts,riot-games').subscribe(
+        return this.rawGApi.getSelectedGames('league-of-legends,valorant,halo-infinite,fifa-23,Call-of-duty:-Modern-warfare-2&parent_platforms=1&exclude_collection=true&dates=2018-01-01,2026-12-31&publishers=microsoft-studios,activision-blizzard,electronic-arts,riot-games').subscribe(
             (data:any) => {
                 this.games = data.results;
                 if (this.slider) {

@@ -10,3 +10,17 @@
     </div>
 </div>
 
+<!-- Alternativa 1: Tarjetas (Cards) -->
+<div class="card-container">
+  <div class="game-card" *ngFor="let game of games">
+    <img class="game-card-image" [src]="game.background_image" alt="{{game.name}}">
+    <div class="game-card-content">
+      <h2>{{game.name}}</h2>
+      <p><strong>Plataformas:</strong>
+        <span *ngFor="let platform of game.platforms">{{platform.platform.name}} </span>
+      </p>
+      <p class="game-description">{{game.description}}</p>
+      <button (click)="openCalendar(game)">Ver calendario</button>
+    </div>
+  </div>
+</div>

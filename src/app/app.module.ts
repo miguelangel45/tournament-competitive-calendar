@@ -11,13 +11,15 @@ import {FifaGameComponent} from './fifa-game/fifa-game.component';
 import {HttpClientModule} from "@angular/common/http";
 import {LolGameComponent} from './lol-game/lol-game.component';
 import { CachedSrcDirective } from './cached-src.directive';
+import { GameComponent } from './game/game.component';
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
-    {path: 'calendar/valorant', component: ValorantGameComponent},
+    /*{path: 'calendar/valorant', component: ValorantGameComponent},
     {path: 'calendar/lol', component: LolGameComponent},
     {path: 'calendar/call-of-duty', component: CodGameComponent},
-    {path: 'calendar/fifa', component: FifaGameComponent},
+    {path: 'calendar/fifa', component: FifaGameComponent},*/
+    {path: 'calendar/:game', component: GameComponent},
 ];
 
 @NgModule({
@@ -30,7 +32,8 @@ const routes: Routes = [
         CodGameComponent,
         FifaGameComponent,
         LolGameComponent,
-        CachedSrcDirective
+        CachedSrcDirective,
+        GameComponent
     ],
     imports: [
         RouterModule.forRoot(routes),

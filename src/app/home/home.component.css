@@ -36,3 +36,119 @@
     object-fit: cover;
     opacity: 0.4;
 }
+
+/* Alternativa 1: Tarjetas (Cards) */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.game-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+.game-card:hover {
+  transform: translateY(-6px) scale(1.03);
+}
+.game-card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.game-card-content {
+  padding: 1.2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.game-card-content h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  color: #222;
+}
+.game-description {
+  margin: 0.7rem 0;
+  color: #555;
+  font-size: 1rem;
+}
+.game-card-content button {
+  align-self: flex-end;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.game-card-content button:hover {
+  background: #1565c0;
+}
+
+/* Alternativa 2: Lista horizontal */
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.game-list-item {
+  display: flex;
+  align-items: flex-start;
+  background: #f7f7f7;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  padding: 1rem;
+  transition: box-shadow 0.2s;
+}
+.game-list-item:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+}
+.game-list-image {
+  width: 160px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 1.5rem;
+}
+.game-list-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.game-list-content h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+.game-description {
+  margin: 0.5rem 0;
+  color: #666;
+  font-size: 0.98rem;
+}
+.game-list-content button {
+  align-self: flex-start;
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.98rem;
+  cursor: pointer;
+  margin-top: 0.7rem;
+  transition: background 0.2s;
+}
+.game-list-content button:hover {
+  background: #388e3c;
+}
+
+/* Puedes alternar los estilos descomentando la alternativa que prefieras. */
