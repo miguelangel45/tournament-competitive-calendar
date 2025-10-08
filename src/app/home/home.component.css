@@ -21,20 +21,24 @@
     display: flex;
     flex-direction: column;
     position: absolute;
+    padding:0.5rem;
 }
 
-.game-container{
+.game-container {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     background-color: rgb(33, 33, 33);
+    position: relative;
 }
 
-.game-container-image{
+.game-container-image {
     height: 100%;
     object-fit: cover;
     opacity: 0.4;
+    width: 100%;
+    display: block;
 }
 
 /* Alternativa 1: Tarjetas (Cards) */
@@ -42,7 +46,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
-  margin: 2rem 0;
+  margin: 2rem 1rem;
 }
 .game-card {
   background: #fff;
@@ -78,9 +82,11 @@
   color: #555;
   font-size: 1rem;
 }
+
+.header-content button,
 .game-card-content button {
   align-self: flex-end;
-  background: #1976d2;
+  background: orange;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -89,66 +95,54 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
+.header-content button:hover,
 .game-card-content button:hover {
-  background: #1565c0;
+  background: rgba(255, 165, 0, 0.3);
 }
 
-/* Alternativa 2: Lista horizontal */
-.list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin: 2rem 0;
-}
-.game-list-item {
-  display: flex;
-  align-items: flex-start;
-  background: #f7f7f7;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  overflow: hidden;
-  padding: 1rem;
-  transition: box-shadow 0.2s;
-}
-.game-list-item:hover {
-  box-shadow: 0 4px 24px rgba(0,0,0,0.14);
-}
-.game-list-image {
-  width: 160px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-right: 1.5rem;
-}
-.game-list-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.game-list-content h2 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.2rem;
-  color: #333;
-}
-.game-description {
-  margin: 0.5rem 0;
-  color: #666;
-  font-size: 0.98rem;
-}
-.game-list-content button {
-  align-self: flex-start;
-  background: #43a047;
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  padding: 0.45rem 1.1rem;
-  font-size: 0.98rem;
-  cursor: pointer;
-  margin-top: 0.7rem;
-  transition: background 0.2s;
-}
-.game-list-content button:hover {
-  background: #388e3c;
+/* Header del juego */
+.game-header {
+    position: absolute;
+    height: 22rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 16px 12px 16px;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(33,33,33,0.85) 80%, rgba(33,33,33,0.0) 100%);
 }
 
-/* Puedes alternar los estilos descomentando la alternativa que prefieras. */
+.header-content {
+    position: relative;
+    z-index: 3;
+    padding: 5rem 1rem;
+    text-align: center;
+}
+
+.game-name {
+    color: orange;
+    font-size: 3rem;
+    margin: 0 0 15px 0;
+    font-weight: bold;
+    text-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+}
+
+.game-meta {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    margin: 2px 4px;
+    white-space: nowrap;
+}

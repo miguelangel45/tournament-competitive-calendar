@@ -1,26 +1,34 @@
 <div class="keen-slider" #sliderRef>
     <div class="keen-slider__slide" [ngClass]="'number-slide'+i" *ngFor="let game of games; index as i">
-        <div class="game-container" >
+        <div class="game-container">
             <img class="game-container-image" [src]="game.background_image" alt="">
             <!--<div class="game-container-image" [style]="'background-image: url('+game.background_image+')'"></div>-->
-            <div class="text-image">
-                <div>Name: {{game.name}} <br> Platforms:</div>
-                <div *ngFor="let platform of game.platforms">{{platform.platform.name}}</div></div>
+            <div class="game-header">
+                <div class="header-content">
+                    <h1 class="game-name">{{ game?.name }}</h1>
+                    <div class="game-meta">
+                    <span class="meta-item" *ngFor="let platform of game?.platforms?.slice(0, 3)">
+                      {{ platform.platform.name }}
+                    </span>
+                        <button (click)="openCalendar(game)">Ver calendario</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Alternativa 1: Tarjetas (Cards) -->
 <div class="card-container">
-  <div class="game-card" *ngFor="let game of games">
-    <img class="game-card-image" [src]="game.background_image" alt="{{game.name}}">
-    <div class="game-card-content">
-      <h2>{{game.name}}</h2>
-      <p><strong>Plataformas:</strong>
-        <span *ngFor="let platform of game.platforms">{{platform.platform.name}} </span>
-      </p>
-      <p class="game-description">{{game.description}}</p>
-      <button (click)="openCalendar(game)">Ver calendario</button>
+    <div class="game-card" *ngFor="let game of games">
+        <img class="game-card-image" [src]="game.background_image" alt="{{game.name}}">
+        <div class="game-card-content">
+            <h2>{{ game.name }}</h2>
+            <p><strong>Plataformas:</strong>
+                <span class="meta-item" *ngFor="let platform of game.platforms">{{ platform.platform.name }} </span>
+            </p>
+            <p class="game-description">{{ game.description }}</p>
+            <button (click)="openCalendar(game)">Ver calendario</button>
+        </div>
     </div>
-  </div>
 </div>
