@@ -39,8 +39,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "12kb",
+                  "maximumError": "16kb"
                 }
               ],
               "outputHashing": "all"
@@ -96,7 +96,8 @@
           "builder": "angular-cli-ghpages:deploy",
           "options": {
             "baseHref": "https://miguelangel45.github.io/tournament-competitive-calendar/",
-            "name": "Miguel Angel Tovar"
+            "name": "Miguel Angel Tovar",
+            "folder": "dist/competitive-calendsar"
           }
         }
       }
